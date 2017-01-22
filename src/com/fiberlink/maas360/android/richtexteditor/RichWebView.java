@@ -241,6 +241,14 @@ public class RichWebView extends WebView
         return mContents;
     }
 
+    public void undo() {
+        exec("javascript:RE.undo();");
+    }
+
+    public void redo() {
+        exec("javascript:RE.redo();");
+    }
+
     public void setEditorHeight(int px)
     {
         exec("javascript:RE.setHeight('" + px + "px');");

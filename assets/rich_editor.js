@@ -22,7 +22,8 @@ RE.currentSelection = {
     "startContainer": 0,
     "startOffset": 0,
     "endContainer": 0,
-    "endOffset": 0};
+    "endOffset": 0
+};
 
 RE.editor = document.getElementById('editor');
 

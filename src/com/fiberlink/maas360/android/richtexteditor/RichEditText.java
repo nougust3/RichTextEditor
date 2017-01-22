@@ -17,12 +17,6 @@ import android.widget.RelativeLayout;
 
 import com.fiberlink.maas360.android.richtexteditor.colorpicker.AmbilWarnaDialog;
 
-/**
- * -----------------------------------------------------------------------------
- * "© Copyright IBM Corp 2016"
- * -----------------------------------------------------------------------------
- */
-
 public class RichEditText extends RelativeLayout
 {
     private Context mContext;
@@ -105,6 +99,10 @@ public class RichEditText extends RelativeLayout
         mEditor.setHtml(html);
         // Delay any scroll as the html may take a little time to render
         mScrollDelay = 500;
+    }
+
+    public RichWebView getmEditor() {
+        return mEditor;
     }
 
     public String getHtml()
@@ -465,6 +463,9 @@ public class RichEditText extends RelativeLayout
                     @Override
                     public void onCancel(AmbilWarnaDialog dialog)
                     {
+
+
+
                         // Dialog cancelled
                     }
 
