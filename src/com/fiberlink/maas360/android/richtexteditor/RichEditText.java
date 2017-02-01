@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -49,6 +50,9 @@ public class RichEditText extends RelativeLayout
     private boolean mBulletsAllowed;
     private boolean mNumbersAllowed;
 
+    private boolean isFocusable;
+    private OnClickListener clickListener;
+
     private int mSelectedTextColor = -1;
     private int mSelectedTextBackgroundColor = -1;
     private int mScrollDelay = 0;
@@ -84,6 +88,11 @@ public class RichEditText extends RelativeLayout
     {
         mActions = actionsView;
         setupActions();
+    }
+
+    public void setFocusable(boolean focusable) {
+        isFocusable = focusable;
+
     }
 
     public void setPreviewText(String previewText)
@@ -164,7 +173,11 @@ public class RichEditText extends RelativeLayout
     {
         mEditor = (RichWebView) findViewById(R.id.editor);
         mEditor.setEditorFontColor(Color.BLACK);
-        mEditor.setPadding(16, 16, 16, 16);
+        mEditor.setPadding(16, 16, 16, 50);
+       // mEditor.setEditable(true);
+
+
+       // mEditor.setOnClickListener(null);
 
         mEditor.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
@@ -175,7 +188,9 @@ public class RichEditText extends RelativeLayout
                     blockAndDisableAllButtons();
                 }
                 else {
-                    mActions.setVisibility(VISIBLE);
+                    if(mActions != null) {
+                        mActions.setVisibility(VISIBLE);
+                    }
                 }
             }
         });

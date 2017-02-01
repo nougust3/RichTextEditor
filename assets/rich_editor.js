@@ -25,6 +25,8 @@ RE.currentSelection = {
     "endOffset": 0
 };
 
+RE.editable = true;
+
 RE.editor = document.getElementById('editor');
 
 RE.setHtml = function(contents) {
@@ -221,13 +223,13 @@ RE.restorerange = function(){
 }
 
 RE.focus = function() {
-    var range = document.createRange();
-    range.selectNodeContents(RE.editor);
-    range.collapse(false);
-    var selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    RE.editor.focus();
+        var range = document.createRange();
+        range.selectNodeContents(RE.editor);
+        range.collapse(false);
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        RE.editor.focus();
 }
 
 RE.blurFocus = function() {

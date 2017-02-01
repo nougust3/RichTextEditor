@@ -12,7 +12,9 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -74,6 +76,7 @@ public class RichWebView extends WebView
     private OnStateChangeListener mStateChangeListener;
     private AfterInitialLoadListener mLoadListener;
     private ScrollListener mScrollListener;
+    private OnScrollChangedCallback mOnScrollChangedCallback;
 
     public RichWebView(Context context)
     {
@@ -99,6 +102,35 @@ public class RichWebView extends WebView
         loadUrl(SETUP_HTML);
 
         applyAttributes(context, attrs);
+    }
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        if (mOnScrollChangedCallback != null) {
+            mOnScrollChangedCallback.onScrollChange(this, l, t, oldl, oldt);
+        }
+
+    }
+
+    public void setOnScrollChangedCallback(final OnScrollChangedCallback mOnScrollChangedCallback) {
+        this.mOnScrollChangedCallback = mOnScrollChangedCallback;
+    }
+
+    public OnScrollChangedCallback getOnScrollChangedCallback() {
+        return mOnScrollChangedCallback;
+    }
+
+    public interface OnScrollChangedCallback {
+        /**
+         * Called when the scroll position of a view changes.
+         *
+         * @param v          The view whose scroll position has changed.
+         * @param scrollX    Current horizontal scroll origin.
+         * @param scrollY    Current vertical scroll origin.
+         * @param oldScrollX Previous horizontal scroll origin.
+         * @param oldScrollY Previous vertical scroll origin.
+         */
+        void onScrollChange(WebView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY);
     }
 
     protected EditorWebViewClient createWebviewClient()
@@ -167,6 +199,14 @@ public class RichWebView extends WebView
         }
 
     }
+
+
+    //@Override
+   // public boolean onTouchEvent(MotionEvent event) {
+        //return true;AXIS_HSCROLL
+        //return mProvider.getViewDelegate().onTouchEvent(MotionEvent.AXIS_HSCROLL);
+        //return mProvider.getViewDelegate().onTouchEvent(event);
+   // }
 
     private void applyAttributes(Context context, AttributeSet attrs)
     {
@@ -247,6 +287,17 @@ public class RichWebView extends WebView
 
     public void redo() {
         exec("javascript:RE.redo();");
+    }
+
+    public void setEditable(boolean editable) {
+        Log.i("Keep", "setEditable() + " + editable);
+        //setFocusable(editable);
+        //if(editable) {
+        //    exec("javascript:RE.enable();");
+        //}
+       // else {
+        //    exec("javascript:RE.disable();");
+       // }
     }
 
     public void setEditorHeight(int px)
