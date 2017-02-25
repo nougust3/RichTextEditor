@@ -376,10 +376,10 @@ RE.editor.addEventListener("input", function(e) {
             if (letter && changeDir) {
                 var rtl = RE.checkRTL(char);
                 if (rtl) {
-                    RE.setDirection("rtl", char);
+                    //RE.setDirection("rtl", char);
                 }
                 else {
-                    RE.setDirection("ltr", char);
+                    //RE.setDirection("ltr", char);
                 }
                 changeDir = false;
             }

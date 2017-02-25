@@ -5,7 +5,8 @@
     android:layout_below="@id/editor"
     android:background="@android:color/white"
     android:gravity="center_horizontal"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:animateLayoutChanges="true">
 
     <ImageButton
         android:id="@+id/action_bold"

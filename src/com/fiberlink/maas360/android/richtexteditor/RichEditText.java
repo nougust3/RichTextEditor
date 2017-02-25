@@ -2,6 +2,8 @@ package com.fiberlink.maas360.android.richtexteditor;
 
 import java.util.List;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
@@ -51,6 +53,7 @@ public class RichEditText extends RelativeLayout
     private boolean mNumbersAllowed;
 
     private boolean isFocusable;
+    private boolean actionsVisible;
     private OnClickListener clickListener;
 
     private int mSelectedTextColor = -1;
@@ -173,7 +176,7 @@ public class RichEditText extends RelativeLayout
     {
         mEditor = (RichWebView) findViewById(R.id.editor);
         mEditor.setEditorFontColor(Color.BLACK);
-        mEditor.setPadding(16, 16, 16, 50);
+        mEditor.setPadding(16, 16, 16, 16);
        // mEditor.setEditable(true);
 
 
@@ -184,11 +187,13 @@ public class RichEditText extends RelativeLayout
             public void onFocusChange(View v, boolean hasFocus)
             {
                 if (!hasFocus) {
+                    actionsVisible = false;
                     mActions.setVisibility(GONE);
                     blockAndDisableAllButtons();
                 }
                 else {
                     if(mActions != null) {
+                        actionsVisible = true;
                         mActions.setVisibility(VISIBLE);
                     }
                 }
@@ -304,8 +309,49 @@ public class RichEditText extends RelativeLayout
         }
     }
 
+    public void hideActions() {
+        //mActions.setVisibility(GONE);
+        //blockAndDisableAllButtons();
+        mActions.animate().alpha(0.0f).translationY(mActions.getHeight()/2)
+                .setDuration(150).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mActions.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void showActions() {
+        //if(mActions != null) {
+
+        mActions.setVisibility(View.VISIBLE);
+        mActions.animate().alpha(1.0f).translationY(0)
+                .setDuration(150).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+            }
+        });
+    }
+
+    public boolean isActionsVisible() {
+        //if(mActions != null) {
+            if(actionsVisible) {
+                return true;
+            }
+        if(mActions == null) {
+            return false;
+        }
+
+        //}
+
+        return false;
+    }
+
     private void setupActions()
     {
+        actionsVisible = false;
         mActions.setVisibility(GONE);
 
         setupBoldButton();

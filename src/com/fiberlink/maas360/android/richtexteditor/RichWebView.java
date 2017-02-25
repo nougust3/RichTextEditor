@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -67,6 +68,7 @@ public class RichWebView extends WebView
     {
         void onScrollTo(int y);
     }
+
 
     private static final String SETUP_HTML = "file:///android_asset/editor.html";
     private static final String CALLBACK_SEPARATOR = "~!~!~!";
@@ -414,6 +416,7 @@ public class RichWebView extends WebView
                 mLoadListener.onAfterInitialLoad(isReady);
             }
         }
+
     }
 
     public class EditorJavaScriptInterface
